@@ -8,16 +8,21 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 import sys
-
-print(sys.argv)
+import os
 
 print("Running linear modelling of data python script")
 print()
 
 # # Set notebook variables
-filename = "regrex1.csv"
+if len(sys.argv) < 2:
+    print("Missing filename")
+    sys.exit(-1)
 
-print("Loading filename {}".format(filename))
+filename = sys.argv[1]
+
+base,ext = os.path.splitext(filename)
+
+print("Loading dataset {}".format(filename))
 print()
 
 # # Use the read_csv() function
@@ -25,8 +30,12 @@ dataset = pd.read_csv(filename)
 dataset.describe
 print(dataset)
 
+# Plot Data
 plt.scatter(dataset[['x']], dataset[['y']], color = 'red')
-
+plt.title('y vs x')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.savefig("{}.png".format(base))
 
 # # Fitting Linear Regression to the Dataset
 model = LinearRegression()
